@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "config:best-practices",
+    "schedule:weekly",
+    ":combinePatchMinorReleases",
+    ":approveMajorUpdates"
+  ],
+  "labels": [
+    "dependencies"
+  ]
+}

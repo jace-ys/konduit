@@ -1,0 +1,17 @@
+{
+  "cluster": {
+    "name": "cluster-01",
+    "tags": {
+      "environment": "production",
+      "region": "us-east-1"
+    },
+    "attributes": {
+      "vault": {
+        "enabled": true
+      },
+      "images": {
+        "registry": "docker.io"
+      }
+    }
+  }
+}

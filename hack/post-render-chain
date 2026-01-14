@@ -1,0 +1,10 @@
+#!/bin/sh
+
+HACK_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+INPUT="cat"
+for DIR in "$@"; do
+    INPUT="$INPUT | \"$HACK_DIR/post-render\" \"$DIR\""
+done
+
+eval "$INPUT"

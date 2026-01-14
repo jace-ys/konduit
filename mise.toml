@@ -1,0 +1,47 @@
+[tools]
+cue = "0.15.3"
+go = "1.25.5"
+golangci-lint = "2.8.0"
+helm = "3.19.4"
+kustomize = "5.8.0"
+
+"go:github.com/vektra/mockery/v3" = "3.6.1"
+
+[tasks.build]
+run = "go build -o dist/ ./cmd/..."
+depends = ["generate", "fmt"]
+sources = ["go.mod", "go.sum", "**/*.go"]
+outputs = ["dist/*"]
+
+[tasks.generate]
+run = [
+    "go generate ./...",
+    "mockery",
+]
+sources = ["go.mod", "go.sum", "**/*.go", ".mockery.yaml"]
+
+[tasks.fmt]
+run = [
+    "go fmt ./...",
+    "cue fmt --files ./ --simplify",
+]
+sources = ["**/*.go", "**/*.cue"]
+
+[tasks.lint]
+run = "golangci-lint run ./..."
+depends = ["generate", "fmt"]
+sources = ["**/*.go", ".golangci.yml"]
+
+[tasks.test]
+run = [
+    "go test ./... -race",
+    "go test ./tests/... -race -count 1",
+]
+depends = ["generate", "fmt"]
+sources = ["go.mod", "go.sum", "**/*.go", "tests/**/*", "examples/logstash/**/*"]
+
+[tasks.release]
+usage = '''
+arg "<version>" help="Semver tag to release"
+'''
+run = "git tag ${usage_version} && git push origin ${usage_version}"

@@ -1,0 +1,40 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./cmd/konduit
+    env:
+      - CGO_ENABLED=0
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+homebrew_casks:
+  - repository:
+      owner: jace-ys
+      name: homebrew-tap
+      token: "{{ .Env.GITHUB_TOKEN_HOMEBREW_TAP }}"
+    homepage: "{{ .GitURL }}"
+    description: "Helm meets Kustomize, but without the YAML"
+    dependencies:
+      - formula: helm@3
+      - formula: kustomize
+    caveats: |
+      Konduit currently only works with Helm 3. Since helm@3 is keg-only, you need to add it to your PATH or use the --helm-command flag.
+    hooks:
+      post:
+        install: |
+          system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/konduit"]
+
+dockers_v2:
+  - images:
+      - ghcr.io/jace-ys/konduit
+    tags:
+      - v{{ .Version }}
+      - latest
+    labels:
+      "org.opencontainers.image.name": "{{ .ProjectName }}"
+      "org.opencontainers.image.version": "v{{ .Version }}"
+      "org.opencontainers.image.revision": "{{ .FullCommit }}"
+      "org.opencontainers.image.source": "{{ .GitURL }}"

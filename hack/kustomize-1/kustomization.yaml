@@ -1,0 +1,6 @@
+---
+commonLabels:
+  post-render-1: "true"
+
+resources:
+  - manifests.yaml

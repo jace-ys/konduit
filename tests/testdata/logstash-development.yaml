@@ -1,0 +1,98 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: konduit-elasticsearch-monitoring
+  labels:
+    kubernetes.konduit.io/cluster: cluster-01
+    kubernetes.konduit.io/environment: development
+    kubernetes.konduit.io/region: us-west-2
+    post-render-1: "true"
+    post-render-2: "true"
+type: Opaque
+data:
+  url: aHR0cHM6Ly9tb25pdG9yaW5nLmVsYXN0aWNzZWFyY2gua29uZHVpdC5pbw==
+  username: bW9uaXRvcmluZw==
+  password: c2VjcmV0MTIz
+---
+apiVersion: logstash.k8s.elastic.co/v1alpha1
+kind: Logstash
+metadata:
+  name: konduit-logstash-eck-logstash
+  labels:
+    app.kubernetes.io/instance: logstash
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: eck-logstash
+    helm.sh/chart: eck-logstash-0.17.0
+    kubernetes.konduit.io/cluster: cluster-01
+    kubernetes.konduit.io/environment: development
+    kubernetes.konduit.io/region: us-west-2
+    post-render-1: "true"
+    post-render-2: "true"
+  annotations:
+    eck.k8s.elastic.co/license: basic
+spec:
+  version: 9.2.3
+  count: 1
+  elasticsearchRefs:
+    - name: elasticsearch
+      namespace: elasticsearch
+  secureSettings: []
+  services: []
+  volumeClaimTemplates: []
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+        - secretName: elasticsearch-monitoring
+    logs:
+      elasticsearchRefs:
+        - secretName: elasticsearch-monitoring
+  image: docker.io/logstash:9.2.3
+  podTemplate:
+    metadata:
+      labels:
+        kubernetes.konduit.io/cluster: cluster-01
+        kubernetes.konduit.io/environment: development
+        kubernetes.konduit.io/region: us-west-2
+      annotations:
+        co.elastic.logs/enabled: "true"
+        ad.datadoghq.com/logstash.checks: |-
+          {
+            "logstash": {
+              "instances": [
+                {
+                  "url": "http://%%host%%:9600"
+                }
+              ]
+            }
+          }
+    spec:
+      containers:
+        - name: logstash
+          resources:
+            limits:
+              memory: 64Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+  pipelines:
+    - "pipeline.id": logs.topic-01
+      "pipeline.workers": 2
+      "config.debug": true
+      "config.string": |-
+        input {
+          kafka {
+            bootstrap_servers => "${KAFKA_BOOTSTRAP_SERVERS}"
+            topics => ["logs.topic-01"]
+            group_id => "logstash/logs.topic-01"
+            codec => "json"
+          }
+        }
+        output {
+          elasticsearch {
+            hosts => [ "${ELASTICSEARCH_ES_HOSTS}" ]
+            user => "${ELASTICSEARCH_ES_USER}"
+            password => "${ELASTICSEARCH_ES_PASSWORD}"
+            ssl_certificate_authorities => "${ELASTICSEARCH_ES_SSL_CERTIFICATE_AUTHORITY}"
+          }
+        }

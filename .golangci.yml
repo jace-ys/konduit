@@ -1,0 +1,94 @@
+---
+version: "2"
+
+linters:
+  default: all
+  disable:
+    - contextcheck
+    - depguard
+    - err113
+    - exhaustruct
+    - gochecknoglobals
+    - ireturn
+    - misspell
+    - mnd
+    - nlreturn
+    - noinlineerr
+    - tagalign
+    - unparam
+    - varnamelen
+    - wsl
+    - wsl_v5
+
+  settings:
+    cyclop:
+      package-average: 10.0
+
+    funlen:
+      ignore-comments: true
+
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+
+    exhaustive:
+      check:
+        - switch
+        - map
+
+    gocognit:
+      min-complexity: 20
+
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+
+    nakedret:
+      max-func-lines: 0
+
+    revive:
+      rules:
+        - name: unused-parameter
+          disabled: true
+        - name: var-naming
+          disabled: true
+
+  exclusions:
+    warn-unused: true
+    presets:
+      - comments
+      - std-error-handling
+      - common-false-positives
+      - legacy
+    rules:
+      - linters:
+          - funlen
+        path: _test\.go
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - swaggo
+
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - localmodule
+
+    golines:
+      max-len: 120
+      shorten-comments: true
+      reformat-tags: false
+
+  exclusions:
+    warn-unused: true
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

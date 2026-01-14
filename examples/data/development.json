@@ -1,0 +1,14 @@
+{
+  "cluster": {
+    "name": "cluster-01",
+    "tags": {
+      "environment": "development",
+      "region": "us-west-2"
+    },
+    "attributes": {
+      "images": {
+        "registry": "docker.io"
+      }
+    }
+  }
+}
