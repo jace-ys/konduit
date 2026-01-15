@@ -1,0 +1,33 @@
+name: tag
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - plugin.yaml
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Create and push tag
+        run: |
+          TAG="v$(yq '.version' plugin.yaml)"
+
+          if git rev-parse "$TAG" > dev/null 2>&1; then
+            echo "Tag $TAG already exists, skipping"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
