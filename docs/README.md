@@ -21,7 +21,7 @@ When running Konduit locally, the following tools must be installed and availabl
 
 | Tool | Required | Tested Version |
 |------|----------|----------------|
-| [Helm](https://helm.sh/docs/intro/install/) | Yes | 3.x (Helm 4 not yet supported) |
+| [Helm](https://helm.sh/docs/intro/install/) | Yes | 3.19+ (Helm 4 not yet supported) |
 | [Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) | If using `-p` patches | 5.8+ |
 | [CUE](https://cuelang.org/docs/introduction/installation/) | No (for development purposes) | 0.15+ |
 

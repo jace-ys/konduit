@@ -2,8 +2,10 @@ name: release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+    paths:
+      - plugin.yaml
 
 permissions:
   contents: write
@@ -13,12 +15,41 @@ jobs:
   ci:
     uses: ./.github/workflows/ci.yml
 
-  release:
+  tag:
     needs: [ci]
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+      created: ${{ steps.tag.outputs.created }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Create and push tag
+        id: tag
+        run: |
+          TAG="v$(yq '.version' plugin.yaml)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          if git rev-parse "$TAG" > /dev/null 2>&1; then
+            echo "Tag $TAG already exists, skipping"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+          echo "created=true" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: [tag]
+    if: needs.tag.outputs.created == 'true'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: ${{ needs.tag.outputs.tag }}
           fetch-depth: 0
       - uses: actions/setup-go@v6
         with:
