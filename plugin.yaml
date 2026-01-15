@@ -1,5 +1,5 @@
 name: konduit
-version: "0.1.0"
+version: "0.2.0"
 description: "Helm meets Kustomize, but without the YAML."
 platformCommand:
   - os: windows
