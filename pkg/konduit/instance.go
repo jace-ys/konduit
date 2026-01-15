@@ -24,11 +24,14 @@ type Instance struct {
 	PatchesToEvaluate []string
 	patchesOpt        []string
 
-	dir       string
+	dir    string
+	strict bool
+
 	evaluator Evaluator
 	runner    exec.Runner
 }
 
+//nolint:cyclop
 func New(args []string, values []string, opts ...Option) (*Instance, error) {
 	if len(args) == 0 {
 		return nil, errors.New("no arguments provided to Helm")
@@ -61,6 +64,16 @@ func New(args []string, values []string, opts ...Option) (*Instance, error) {
 	}
 
 	parseHelmArgs(instance, args)
+
+	if instance.strict {
+		if len(instance.ValuesToEvaluate) > 0 && len(instance.Values) > 0 {
+			return nil, errors.New("strict mode enabled; can't use evaluated and static values at the same time")
+		}
+		if len(instance.PatchesToEvaluate) > 0 && len(instance.Patches) > 0 {
+			return nil, errors.New("strict mode enabled; can't use evaluated and static patches at the same time")
+		}
+	}
+
 	return instance, nil
 }
 

@@ -38,7 +38,7 @@ A simple example demonstrating basic Konduit usage.
 1. Injects environment-specific cluster data into the CUE evaluation via scopes
 1. Imports reusable CUE libraries for enforcing common patterns and constraints
 1. Applies Kustomize patches from `patches.cue` that extends the Helm chart
-1. Chains two additional Helm [post-renderers](https://helm.sh/docs/v3/topics/advanced#post-rendering) (`kustomize-1`, `kustomize-2`)
+1. Chains two additional Helm post-renderers (`kustomize-1`, `kustomize-2`)
 
 ### Run
 

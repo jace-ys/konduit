@@ -28,6 +28,12 @@ func WithWorkDir(dir string) Option {
 	})
 }
 
+func WithModeStrict(strict bool) Option {
+	return OptionFunc(func(i *Instance) {
+		i.strict = strict
+	})
+}
+
 func WithEvaluator(evaluator Evaluator) Option {
 	return OptionFunc(func(i *Instance) {
 		i.evaluator = evaluator

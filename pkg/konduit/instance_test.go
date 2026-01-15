@@ -146,11 +146,12 @@ func TestInstance_New_WithCUEEvaluator(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name   string
-		args   []string
-		values []string
-		opts   []konduit.Option
-		want   *konduit.Instance
+		name    string
+		args    []string
+		values  []string
+		opts    []konduit.Option
+		want    *konduit.Instance
+		wantErr string
 	}{
 		{
 			name:   "correctly separates values to be evaluated",
@@ -172,6 +173,53 @@ func TestInstance_New_WithCUEEvaluator(t *testing.T) {
 				PatchesToEvaluate: []string{"patches.cue"},
 			},
 		},
+		{
+			name:   "strict mode allows only evaluated values",
+			args:   []string{"install", "my-release", "my-chart"},
+			values: []string{"values.cue"},
+			opts:   []konduit.Option{konduit.WithModeStrict(true)},
+			want: &konduit.Instance{
+				HelmArgs:         []string{"install", "my-release", "my-chart"},
+				ValuesToEvaluate: []string{"values.cue"},
+			},
+		},
+		{
+			name:   "strict mode allows only static values",
+			args:   []string{"install", "my-release", "my-chart"},
+			values: []string{"values.yaml"},
+			opts:   []konduit.Option{konduit.WithModeStrict(true)},
+			want: &konduit.Instance{
+				HelmArgs: []string{"install", "my-release", "my-chart"},
+				Values:   []string{"values.yaml"},
+			},
+		},
+		{
+			name:   "allows mixed values when strict mode disabled",
+			args:   []string{"install", "my-release", "my-chart"},
+			values: []string{"values.cue", "values.yaml"},
+			opts:   []konduit.Option{konduit.WithModeStrict(false)},
+			want: &konduit.Instance{
+				HelmArgs:         []string{"install", "my-release", "my-chart"},
+				Values:           []string{"values.yaml"},
+				ValuesToEvaluate: []string{"values.cue"},
+			},
+		},
+		{
+			name:    "strict mode rejects mixed evaluated and static values",
+			args:    []string{"install", "my-release", "my-chart"},
+			values:  []string{"values.cue", "values.yaml"},
+			opts:    []konduit.Option{konduit.WithModeStrict(true)},
+			wantErr: "strict mode enabled; can't use evaluated and static values at the same time",
+		},
+		{
+			name: "strict mode rejects mixed evaluated and static patches",
+			args: []string{"install", "my-release", "my-chart"},
+			opts: []konduit.Option{
+				konduit.WithPatches([]string{"patches.cue", "patches.yaml"}),
+				konduit.WithModeStrict(true),
+			},
+			wantErr: "strict mode enabled; can't use evaluated and static patches at the same time",
+		},
 	}
 
 	for _, tt := range tests {
@@ -182,8 +230,13 @@ func TestInstance_New_WithCUEEvaluator(t *testing.T) {
 			tt.opts = append(tt.opts, konduit.WithEvaluator(eval))
 
 			actual, err := konduit.New(tt.args, tt.values, tt.opts...)
-			require.NoError(t, err)
+			if tt.wantErr != "" {
+				require.Error(t, err)
+				assert.ErrorContains(t, err, tt.wantErr)
+				return
+			}
 
+			require.NoError(t, err)
 			assert.Equal(t, konduit.DefaultHelmCommand, actual.HelmCommand)
 			assert.Equal(t, tt.want.HelmArgs, actual.HelmArgs)
 			assert.Equal(t, tt.want.Values, actual.Values)

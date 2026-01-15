@@ -39,9 +39,3 @@ run = [
 ]
 depends = ["generate", "fmt"]
 sources = ["go.mod", "go.sum", "**/*.go", "tests/**/*", "examples/logstash/**/*"]
-
-[tasks.release]
-usage = '''
-arg "<version>" help="Semver tag to release"
-'''
-run = "git tag ${usage_version} && git push origin ${usage_version}"

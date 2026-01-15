@@ -22,6 +22,8 @@ type CUECmd struct {
 
 	CUEBaseDir    string `help:"Base directory for import path resolution. If empty, the current directory is used."`
 	CUEModuleRoot string `help:"Directory that contains the cue.mod directory and packages."`
+
+	Strict bool `help:"Disallow using evaluated and static configuration at the same time."`
 }
 
 func (c *CUECmd) Run(ctx context.Context, g *Globals) error {
@@ -35,7 +37,10 @@ func (c *CUECmd) Run(ctx context.Context, g *Globals) error {
 		cueval.WithLoadModuleRoot(c.CUEModuleRoot),
 	)
 
-	opts := []konduit.Option{konduit.WithEvaluator(eval)}
+	opts := []konduit.Option{
+		konduit.WithEvaluator(eval),
+		konduit.WithModeStrict(c.Strict),
+	}
 
 	if len(c.Patches) > 0 {
 		opts = append(opts, konduit.WithPatches(c.Patches))

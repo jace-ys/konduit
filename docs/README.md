@@ -135,11 +135,17 @@ In this example, `overrides.yaml` values override matching keys from the evaluat
 
 Patches extend manifests from Helm charts using Kustomize - use them when a chart doesn't expose the values or templates you need.
 
-In Konduit's context, "patches" refer to [Kustomization](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/) files containing [built-in generators or transformers](https://kubectl.docs.kubernetes.io/references/kustomize/builtins/) manifests.
+In Konduit's context, "patches" refer to [kustomization](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/) files containing [built-in generators or transformers](https://kubectl.docs.kubernetes.io/references/kustomize/builtins/).
+
+### Supported Format
+
+Patches must use **kustomization field syntax** — the same fields you'd put in a `kustomization.yaml` file. See the [kustomization reference](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/) for the full list of supported fields.
+
+> **Note:** Standalone transformer configurations are **not currently supported**. Use the equivalent kustomization fields instead — for example, use `commonLabels` instead of `LabelTransformer`.
 
 ### How It Works
 
-This is done via a Helm post-renderer, similar to the [example](https://github.com/thomastaylor312/advanced-helm-demos/blob/master/post-render/kustomize/kustomize) provided in their docs:
+This is done via a Helm [post-renderer](https://helm.sh/docs/v3/topics/advanced/#post-rendering), similar to the [example](https://github.com/thomastaylor312/advanced-helm-demos/blob/master/post-render/kustomize/kustomize) provided in their docs:
 
 1. Konduit writes patches to a temp `kustomization.yaml` file
 1. Konduit invokes Helm with the [`konduit kustomize` post-renderer](../cmd/konduit/kustomize.go)
@@ -356,8 +362,8 @@ func main() {
 
     // Create a Konduit instance
     k, err := konduit.New(
-        []string{"template", "my-release", "./chart"},  // Helm args
-        []string{"values.cue", "production.cue"},    // Values files
+        []string{"template", "my-release", "./chart"},
+        []string{"values.cue", "production.cue"},
         konduit.WithEvaluator(eval),
         konduit.WithPatches([]string{"patches.cue"}),
     )
@@ -464,5 +470,3 @@ konduit cue \
 ```
 
 See the [examples directory](../examples/README.md) for complete working examples.
-
----
