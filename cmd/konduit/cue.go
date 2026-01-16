@@ -61,7 +61,9 @@ func (c *CUECmd) Run(ctx context.Context, g *Globals) error {
 			return fmt.Errorf("construct invocation: %w", err)
 		}
 
-		if err := json.NewEncoder(g.Stdout).Encode(cmd); err != nil {
+		enc := json.NewEncoder(g.Stdout)
+		enc.SetIndent("", "  ")
+		if err := enc.Encode(cmd); err != nil {
 			return fmt.Errorf("encode invocation: %w", err)
 		}
 

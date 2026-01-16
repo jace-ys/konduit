@@ -77,7 +77,9 @@ func (c *VersionCmd) Run(ctx context.Context, g *Globals) error {
 		OS:        runtime.GOOS,
 		Arch:      runtime.GOARCH,
 	}
-	if err := json.NewEncoder(g.Stdout).Encode(info); err != nil {
+	enc := json.NewEncoder(g.Stdout)
+	enc.SetIndent("", "  ")
+	if err := enc.Encode(info); err != nil {
 		return fmt.Errorf("encode build info: %w", err)
 	}
 	return nil
