@@ -9,9 +9,16 @@
   "packageRules": [
     {
       "matchPackageNames": [
+        "go"
+      ],
+      "groupName": "go"
+    },
+    {
+      "matchPackageNames": [
         "alpine/helm",
         "helm"
       ],
+      "groupName": "helm",
       "allowedVersions": "<4.0.0"
     }
   ]

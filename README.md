@@ -2,10 +2,10 @@
 [![release-badge]][release-workflow]
 [![godoc-badge]][godoc]
 
-[ci-badge]: https://github.com/jace-ys/konduit/workflows/ci/badge.svg
-[ci-workflow]: https://github.com/jace-ys/konduit/actions?query=workflow%3Aci
-[release-badge]: https://github.com/jace-ys/konduit/workflows/release/badge.svg
-[release-workflow]: https://github.com/jace-ys/konduit/actions?query=workflow%3Arelease
+[ci-badge]: https://github.com/jace-ys/konduit/actions/workflows/ci.yml/badge.svg
+[ci-workflow]: https://github.com/jace-ys/konduit/actions/workflows/ci.yml?query=branch%3Amain
+[release-badge]: https://github.com/jace-ys/konduit/actions/workflows/release.yml/badge.svg
+[release-workflow]: https://github.com/jace-ys/konduit/actions/workflows/release.yml?query=branch%3Amain
 [godoc-badge]: https://pkg.go.dev/badge/github.com/jace-ys/konduit/pkg/konduit.svg
 [godoc]: https://pkg.go.dev/github.com/jace-ys/konduit/pkg/konduit
 

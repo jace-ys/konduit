@@ -101,6 +101,7 @@ Flags:
       --helm-command=STRING       Helm command or path to an executable.
       --cue-base-dir=STRING       Base directory for import path resolution. If empty, the current directory is used.
       --cue-module-root=STRING    Directory that contains the cue.mod directory and packages.
+      --strict                    Disallow using evaluated and static configuration at the same time.
 ```
 
 ---
