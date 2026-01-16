@@ -39,7 +39,7 @@ func (_m *MockRunner) EXPECT() *MockRunner_Expecter {
 }
 
 // Run provides a mock function for the type MockRunner
-func (_mock *MockRunner) Run(ctx context.Context, command string, args []string, opts ...exec.Option) error {
+func (_mock *MockRunner) Run(ctx context.Context, command string, args []string, opts ...exec.RunOption) error {
 	var tmpRet mock.Arguments
 	if len(opts) > 0 {
 		tmpRet = _mock.Called(ctx, command, args, opts)
@@ -53,7 +53,7 @@ func (_mock *MockRunner) Run(ctx context.Context, command string, args []string,
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context, string, []string, ...exec.Option) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string, []string, ...exec.RunOption) error); ok {
 		r0 = returnFunc(ctx, command, args, opts...)
 	} else {
 		r0 = ret.Error(0)
@@ -70,13 +70,13 @@ type MockRunner_Run_Call struct {
 //   - ctx context.Context
 //   - command string
 //   - args []string
-//   - opts ...exec.Option
+//   - opts ...exec.RunOption
 func (_e *MockRunner_Expecter) Run(ctx interface{}, command interface{}, args interface{}, opts ...interface{}) *MockRunner_Run_Call {
 	return &MockRunner_Run_Call{Call: _e.mock.On("Run",
 		append([]interface{}{ctx, command, args}, opts...)...)}
 }
 
-func (_c *MockRunner_Run_Call) Run(run func(ctx context.Context, command string, args []string, opts ...exec.Option)) *MockRunner_Run_Call {
+func (_c *MockRunner_Run_Call) Run(run func(ctx context.Context, command string, args []string, opts ...exec.RunOption)) *MockRunner_Run_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 context.Context
 		if args[0] != nil {
@@ -90,10 +90,10 @@ func (_c *MockRunner_Run_Call) Run(run func(ctx context.Context, command string,
 		if args[2] != nil {
 			arg2 = args[2].([]string)
 		}
-		var arg3 []exec.Option
-		var variadicArgs []exec.Option
+		var arg3 []exec.RunOption
+		var variadicArgs []exec.RunOption
 		if len(args) > 3 {
-			variadicArgs = args[3].([]exec.Option)
+			variadicArgs = args[3].([]exec.RunOption)
 		}
 		arg3 = variadicArgs
 		run(
@@ -111,7 +111,7 @@ func (_c *MockRunner_Run_Call) Return(err error) *MockRunner_Run_Call {
 	return _c
 }
 
-func (_c *MockRunner_Run_Call) RunAndReturn(run func(ctx context.Context, command string, args []string, opts ...exec.Option) error) *MockRunner_Run_Call {
+func (_c *MockRunner_Run_Call) RunAndReturn(run func(ctx context.Context, command string, args []string, opts ...exec.RunOption) error) *MockRunner_Run_Call {
 	_c.Call.Return(run)
 	return _c
 }

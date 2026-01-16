@@ -19,19 +19,19 @@ func NewEvaluator(opts ...Option) *Evaluator {
 	}
 
 	for _, opt := range opts {
-		opt.Apply(e)
+		opt.apply(e)
 	}
 
 	return e
 }
 
 type Option interface {
-	Apply(i *Evaluator)
+	apply(i *Evaluator)
 }
 
 type OptionFunc func(*Evaluator)
 
-func (f OptionFunc) Apply(o *Evaluator) { f(o) }
+func (f OptionFunc) apply(o *Evaluator) { f(o) }
 
 func WithLoadDir(dir string) Option {
 	return OptionFunc(func(o *Evaluator) {

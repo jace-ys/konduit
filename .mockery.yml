@@ -4,5 +4,4 @@ dir: "{{ .InterfaceDir }}/mocks"
 filename: "{{ base .InterfaceFile }}"
 pkgname: mocks
 packages:
-  github.com/jace-ys/konduit/internal/exec:
   github.com/jace-ys/konduit/pkg/konduit:

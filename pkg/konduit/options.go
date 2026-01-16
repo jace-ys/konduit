@@ -1,7 +1,5 @@
 package konduit
 
-import "github.com/jace-ys/konduit/internal/exec"
-
 type Option interface {
 	Apply(i *Instance)
 }
@@ -40,7 +38,7 @@ func WithEvaluator(evaluator Evaluator) Option {
 	})
 }
 
-func WithRunner(runner exec.Runner) Option {
+func WithRunner(runner Runner) Option {
 	return OptionFunc(func(i *Instance) {
 		i.runner = runner
 	})

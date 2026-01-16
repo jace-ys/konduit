@@ -10,7 +10,7 @@ import (
 
 //mockery:generate: true
 type Evaluator interface {
-	Evaluate(files []string) ([]byte, error)
+	Evaluate(files []string) (result []byte, err error)
 	SupportedFileExt() string
 }
 

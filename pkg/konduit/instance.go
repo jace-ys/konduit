@@ -1,6 +1,7 @@
 package konduit
 
 import (
+	"context"
 	"errors"
 	"path/filepath"
 	"strings"
@@ -9,6 +10,11 @@ import (
 )
 
 const DefaultHelmCommand = "helm"
+
+//mockery:generate: true
+type Runner interface {
+	Run(ctx context.Context, command string, args []string, opts ...exec.RunOption) error
+}
 
 type Instance struct {
 	HelmCommand string
@@ -28,7 +34,7 @@ type Instance struct {
 	strict bool
 
 	evaluator Evaluator
-	runner    exec.Runner
+	runner    Runner
 }
 
 //nolint:cyclop

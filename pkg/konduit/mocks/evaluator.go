@@ -87,8 +87,8 @@ func (_c *MockEvaluator_Evaluate_Call) Run(run func(files []string)) *MockEvalua
 	return _c
 }
 
-func (_c *MockEvaluator_Evaluate_Call) Return(bytes []byte, err error) *MockEvaluator_Evaluate_Call {
-	_c.Call.Return(bytes, err)
+func (_c *MockEvaluator_Evaluate_Call) Return(result []byte, err error) *MockEvaluator_Evaluate_Call {
+	_c.Call.Return(result, err)
 	return _c
 }
 

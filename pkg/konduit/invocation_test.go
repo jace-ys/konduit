@@ -9,7 +9,6 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	execmocks "github.com/jace-ys/konduit/internal/exec/mocks"
 	"github.com/jace-ys/konduit/internal/kustomize"
 	"github.com/jace-ys/konduit/pkg/konduit"
 	"github.com/jace-ys/konduit/pkg/konduit/mocks"
@@ -345,7 +344,7 @@ func TestInstance_Execute(t *testing.T) {
 		name               string
 		instance           *konduit.Instance
 		setupMockEvaluator func(*mocks.MockEvaluator)
-		setupMockRunner    func(*execmocks.MockRunner)
+		setupMockRunner    func(*mocks.MockRunner)
 		wantYAML           map[string]string
 		wantErr            string
 	}{
@@ -355,7 +354,7 @@ func TestInstance_Execute(t *testing.T) {
 				HelmArgs: []string{"template", "my-release", "my-chart"},
 			},
 			setupMockEvaluator: func(m *mocks.MockEvaluator) {},
-			setupMockRunner: func(m *execmocks.MockRunner) {
+			setupMockRunner: func(m *mocks.MockRunner) {
 				m.EXPECT().
 					Run(mock.Anything, konduit.DefaultHelmCommand, []string{"template", "my-release", "my-chart"}).
 					Return(nil)
@@ -368,7 +367,7 @@ func TestInstance_Execute(t *testing.T) {
 				Values:   []string{"values.yaml"},
 			},
 			setupMockEvaluator: func(m *mocks.MockEvaluator) {},
-			setupMockRunner: func(m *execmocks.MockRunner) {
+			setupMockRunner: func(m *mocks.MockRunner) {
 				m.EXPECT().
 					Run(mock.Anything, konduit.DefaultHelmCommand, []string{"template", "my-release", "--values", "values.yaml"}).
 					Return(nil)
@@ -383,7 +382,7 @@ func TestInstance_Execute(t *testing.T) {
 			setupMockEvaluator: func(m *mocks.MockEvaluator) {
 				m.EXPECT().Evaluate([]string{"values.cue"}).Return([]byte("key: value\n"), nil)
 			},
-			setupMockRunner: func(m *execmocks.MockRunner) {
+			setupMockRunner: func(m *mocks.MockRunner) {
 				m.EXPECT().Run(mock.Anything, konduit.DefaultHelmCommand, mock.Anything).Return(nil)
 			},
 			wantYAML: map[string]string{
@@ -399,7 +398,7 @@ func TestInstance_Execute(t *testing.T) {
 			setupMockEvaluator: func(m *mocks.MockEvaluator) {
 				m.EXPECT().Evaluate([]string{"patches.cue"}).Return([]byte("namePrefix: test-"), nil)
 			},
-			setupMockRunner: func(m *execmocks.MockRunner) {
+			setupMockRunner: func(m *mocks.MockRunner) {
 				m.EXPECT().Run(mock.Anything, konduit.DefaultHelmCommand, mock.Anything).Return(nil)
 			},
 			wantYAML: map[string]string{
@@ -420,7 +419,7 @@ namePrefix: test-
 			setupMockEvaluator: func(m *mocks.MockEvaluator) {
 				m.EXPECT().Evaluate([]string{"invalid.cue"}).Return(nil, assert.AnError)
 			},
-			setupMockRunner: func(m *execmocks.MockRunner) {},
+			setupMockRunner: func(m *mocks.MockRunner) {},
 			wantErr:         "evaluate values",
 		},
 		{
@@ -429,7 +428,7 @@ namePrefix: test-
 				HelmArgs: []string{"template", "my-release"},
 			},
 			setupMockEvaluator: func(m *mocks.MockEvaluator) {},
-			setupMockRunner: func(m *execmocks.MockRunner) {
+			setupMockRunner: func(m *mocks.MockRunner) {
 				m.EXPECT().Run(mock.Anything, konduit.DefaultHelmCommand, mock.Anything).Return(assert.AnError)
 			},
 			wantErr: "run invocation",
@@ -449,7 +448,7 @@ namePrefix: test-
 			tt.setupMockEvaluator(eval)
 			konduit.WithEvaluator(eval).Apply(tt.instance)
 
-			runner := execmocks.NewMockRunner(t)
+			runner := mocks.NewMockRunner(t)
 			tt.setupMockRunner(runner)
 			konduit.WithRunner(runner).Apply(tt.instance)
 
