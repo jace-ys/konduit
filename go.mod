@@ -8,7 +8,6 @@ require (
 	github.com/goccy/go-yaml v1.19.2
 	github.com/onsi/gomega v1.39.0
 	github.com/stretchr/testify v1.11.1
-	k8s.io/api v0.35.0
 	sigs.k8s.io/kustomize/api v0.21.0
 )
 
@@ -52,8 +51,10 @@ require (
 	golang.org/x/sys v0.40.0 // indirect
 	golang.org/x/text v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20251125145642-4e65d59e963e // indirect
+	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
 	sigs.k8s.io/kustomize/kyaml v0.21.0 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
