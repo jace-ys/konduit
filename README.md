@@ -15,7 +15,7 @@ Helm meets Kustomize, but without the YAML.
 
 Konduit is a thin wrapper around Helm that pre-evaluates chart values using more powerful configuration languages like [CUE](https://cuelang.org/) before passing them to Helm. This lets you build reusable configuration, enforce validation and constraints, and leverage the expressiveness that plain YAML can't provide. Since Konduit passes all arguments directly to Helm, it works seamlessly as a drop-in replacement or as a [Helm plugin](https://helm.sh/docs/topics/plugins/).
 
-Konduit also includes built-in support for [Kustomize](https://kustomize.io/) as a Helm [post-renderer](https://helm.sh/docs/v3/topics/advanced/#post-rendering), allowing you to extend charts that don't expose the values or templates you need without needing to fork them. In Konduit's context, "patches" refer to [kustomization](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/) files containing [built-in generators or transformers](https://kubectl.docs.kubernetes.io/references/kustomize/builtins/).
+Konduit also includes built-in support for [Kustomize](https://kustomize.io/) as a Helm [post-renderer](https://helm.sh/docs/v3/topics/advanced/#post-rendering), allowing you to extend charts that don't expose the values or templates you need without forking them. In Konduit's context, "patches" refer to [kustomization](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/) files containing [built-in generators or transformers](https://kubectl.docs.kubernetes.io/references/kustomize/builtins/).
 
 ## Motivation
 
