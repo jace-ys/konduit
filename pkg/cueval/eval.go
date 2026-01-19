@@ -10,6 +10,7 @@ import (
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/build"
 	"cuelang.org/go/cue/cuecontext"
+	cueerrors "cuelang.org/go/cue/errors"
 	"cuelang.org/go/cue/load"
 	"cuelang.org/go/encoding/yaml"
 )
@@ -46,7 +47,7 @@ func (e *Evaluator) Load(files []string) (*build.Instance, error) {
 
 	inst := instances[0]
 	if inst.Err != nil {
-		return nil, fmt.Errorf("load instance: %w", inst.Err)
+		return nil, fmt.Errorf("load instance: %s", cueerrors.Details(inst.Err, nil))
 	}
 
 	return inst, nil

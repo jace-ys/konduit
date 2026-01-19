@@ -70,6 +70,9 @@ spec:
     spec:
       containers:
         - name: logstash
+          env:
+            - name: ELASTICSEARCH_MONITORING_ES_PASSWORD
+              value: secret123
           resources:
             limits:
               memory: 256Mi

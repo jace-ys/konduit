@@ -35,5 +35,6 @@ podTemplate: {
 	spec: containers: [{
 		name:      app
 		resources: k8s.#ResourceRequirements
+		env: [for k, v in #Konduit.secrets {name: k, value: v}]
 	}]
 }
