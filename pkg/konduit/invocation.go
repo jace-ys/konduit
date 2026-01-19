@@ -66,9 +66,12 @@ func (i *Instance) constructHelmArgs() []string {
 		args = append(args,
 			"--post-renderer", resolveKonduitBinary(),
 			"--post-renderer-args", "kustomize",
-			"--post-renderer-args", "--dir",
-			"--post-renderer-args", i.dir,
 		)
+
+		if i.dir != "" {
+			args = append(args, "--post-renderer-args", "--dir")
+			args = append(args, "--post-renderer-args", i.dir)
+		}
 
 		if i.PostRenderer != "" {
 			args = append(args, "--post-renderer-args", "--post-renderer")
