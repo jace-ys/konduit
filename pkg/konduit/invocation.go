@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/jace-ys/konduit/internal/kustomize"
 )
@@ -61,13 +63,8 @@ func (i *Instance) constructHelmArgs() []string {
 	}
 
 	if len(i.Patches) > 0 || len(i.PatchesToEvaluate) > 0 {
-		konduitCommand, err := os.Executable()
-		if err != nil {
-			konduitCommand = "konduit"
-		}
-
 		args = append(args,
-			"--post-renderer", konduitCommand,
+			"--post-renderer", resolveKonduitBinary(),
 			"--post-renderer-args", "kustomize",
 			"--post-renderer-args", "--dir",
 			"--post-renderer-args", i.dir,
@@ -91,6 +88,22 @@ func (i *Instance) constructHelmArgs() []string {
 	}
 
 	return args
+}
+
+const BinaryName = "konduit"
+
+func resolveKonduitBinary() string {
+	if path, err := exec.LookPath(BinaryName); err == nil {
+		return path
+	}
+
+	if exe, err := os.Executable(); err == nil {
+		if strings.HasPrefix(filepath.Base(exe), BinaryName) {
+			return exe
+		}
+	}
+
+	return BinaryName
 }
 
 func (i *Instance) Execute(ctx context.Context) error {

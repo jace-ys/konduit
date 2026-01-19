@@ -17,7 +17,7 @@ import (
 func TestInstance_Construct(t *testing.T) {
 	t.Parallel()
 
-	executable, err := os.Executable()
+	konduitBinary, err := os.Executable()
 	require.NoError(t, err)
 
 	tests := []struct {
@@ -105,7 +105,7 @@ func TestInstance_Construct(t *testing.T) {
 			want: &konduit.Invocation{
 				Args: []string{
 					"template", "my-release", "my-chart",
-					"--post-renderer", executable,
+					"--post-renderer", konduitBinary,
 					"--post-renderer-args", "kustomize",
 					"--post-renderer-args", "--dir",
 					"--post-renderer-args", "/tmp",
@@ -121,7 +121,7 @@ func TestInstance_Construct(t *testing.T) {
 			want: &konduit.Invocation{
 				Args: []string{
 					"template", "my-release",
-					"--post-renderer", executable,
+					"--post-renderer", konduitBinary,
 					"--post-renderer-args", "kustomize",
 					"--post-renderer-args", "--dir",
 					"--post-renderer-args", "/tmp",
@@ -138,7 +138,7 @@ func TestInstance_Construct(t *testing.T) {
 			want: &konduit.Invocation{
 				Args: []string{
 					"template", "my-release",
-					"--post-renderer", executable,
+					"--post-renderer", konduitBinary,
 					"--post-renderer-args", "kustomize",
 					"--post-renderer-args", "--dir",
 					"--post-renderer-args", "/tmp",
@@ -158,7 +158,7 @@ func TestInstance_Construct(t *testing.T) {
 			want: &konduit.Invocation{
 				Args: []string{
 					"template", "my-release",
-					"--post-renderer", executable,
+					"--post-renderer", konduitBinary,
 					"--post-renderer-args", "kustomize",
 					"--post-renderer-args", "--dir",
 					"--post-renderer-args", "/tmp",
@@ -183,7 +183,7 @@ func TestInstance_Construct(t *testing.T) {
 				Args: []string{
 					"template", "my-release",
 					"--values", "values.yaml",
-					"--post-renderer", executable,
+					"--post-renderer", konduitBinary,
 					"--post-renderer-args", "kustomize",
 					"--post-renderer-args", "--dir",
 					"--post-renderer-args", "/tmp",
@@ -204,7 +204,7 @@ func TestInstance_Construct(t *testing.T) {
 					"template", "my-release",
 					"--values", "/tmp/evaluated.yaml",
 					"--values", "values.yaml",
-					"--post-renderer", executable,
+					"--post-renderer", konduitBinary,
 					"--post-renderer-args", "kustomize",
 					"--post-renderer-args", "--dir",
 					"--post-renderer-args", "/tmp",

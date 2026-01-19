@@ -395,6 +395,18 @@ fmt.Println("Evaluated Values:", inv.EvaluatedValues.ResultYAML)
 fmt.Println("Evaluated Patches:", inv.EvaluatedPatches.ResultYAML)
 ```
 
+### Patches
+
+When using patches via `konduit.WithPatches()`, the `konduit` binary must be installed and available in your `PATH`. This is because patches are applied using Helm's `--post-renderer` flag, which invokes the `konduit kustomize` command as an external process.
+
+```go
+// This requires the konduit binary to be installed
+k, err := konduit.New(
+    []string{"template", "my-release", "./chart"},
+    []string{"values.cue"},
+    konduit.WithPatches([]string{"patches.cue"}),
+)
+```
 
 ### Custom Evaluator
 
