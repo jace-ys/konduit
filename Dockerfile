@@ -1,4 +1,4 @@
-FROM alpine/helm:3.19.0 AS helm
+FROM alpine/helm:3.20.0 AS helm
 FROM registry.k8s.io/kustomize/kustomize:v5.8.0 AS kustomize
 
 FROM alpine:3.23
