@@ -1,9 +1,9 @@
 package k8s
 
 #Cluster: {
-	name:       string
-	tags:       #ClusterTags
-	attributes: #ClusterAttributes
+	name:        string
+	tags:        #ClusterTags
+	attributes?: #ClusterAttributes
 }
 
 #ClusterTags: {
