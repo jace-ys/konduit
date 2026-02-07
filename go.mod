@@ -4,7 +4,7 @@ go 1.25.6
 
 require (
 	cuelang.org/go v0.15.4
-	github.com/alecthomas/kong v1.13.0
+	github.com/alecthomas/kong v1.14.0
 	github.com/goccy/go-yaml v1.19.2
 	github.com/onsi/gomega v1.39.1
 	github.com/stretchr/testify v1.11.1
