@@ -19,7 +19,7 @@ jobs:
           experimental: true
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.25.6"
+          go-version: "1.25.7"
       - name: Install dependencies
         run: go mod tidy
       - name: Run generate
@@ -40,7 +40,7 @@ jobs:
           install: false
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.25.6"
+          go-version: "1.25.7"
       - name: Run lint
         run: mise run lint
 
@@ -55,7 +55,7 @@ jobs:
           install: false
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.25.6"
+          go-version: "1.25.7"
       - name: Run test
         run: mise run test
 
@@ -70,6 +70,6 @@ jobs:
           install: false
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.25.6"
+          go-version: "1.25.7"
       - name: Run build
         run: mise run build
