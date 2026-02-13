@@ -20,6 +20,13 @@
       ],
       "groupName": "helm",
       "allowedVersions": "<4.0.0"
+    },
+    {
+      "matchPackageNames": [
+        "registry.k8s.io/kustomize/kustomize",
+        "kustomize"
+      ],
+      "groupName": "kustomize"
     }
   ]
 }
