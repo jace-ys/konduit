@@ -20,6 +20,12 @@
       ],
       "groupName": "helm",
       "allowedVersions": "<4.0.0"
+    },
+    {
+      "matchPackagePatterns": [
+        "^sigs\\.k8s\\.io/kustomize/"
+      ],
+      "groupName": "kustomize"
     }
   ]
 }
