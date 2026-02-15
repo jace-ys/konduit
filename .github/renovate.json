@@ -15,6 +15,13 @@
     },
     {
       "matchPackageNames": [
+        "cuelang.org/go",
+        "cue"
+      ],
+      "groupName": "cue"
+    },
+    {
+      "matchPackageNames": [
         "alpine/helm",
         "helm"
       ],
