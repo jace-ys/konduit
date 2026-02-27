@@ -35,7 +35,7 @@ func TestKonduitCUE(t *testing.T) {
 
 	for _, environment := range []string{"development", "production"} {
 		t.Run(environment, func(t *testing.T) {
-			cmd := exec.CommandContext(t.Context(), konduit, "cue",
+			cmd := exec.CommandContext(t.Context(), konduit, "cue", //nolint:gosec
 				"--cue-base-dir", "../examples",
 				"-v", fmt.Sprintf("../examples/logstash/values/%s/values.cue", environment),
 				"-v", fmt.Sprintf("../examples/logstash/values/%s/values.yaml", environment),
