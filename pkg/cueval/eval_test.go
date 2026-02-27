@@ -56,7 +56,7 @@ func TestEval(t *testing.T) {
 		{
 			name:    "returns error when value not concrete",
 			files:   []string{"testdata/incomplete.cue"},
-			wantErr: "value not concrete",
+			wantErr: "value not concrete:\nfoo: incomplete value string",
 		},
 		{
 			name:  "returns error when scope file not found",
@@ -80,7 +80,7 @@ func TestEval(t *testing.T) {
 			opts: []cueval.Option{
 				cueval.WithScopes(`{"foo": "one"}`, `{"foo": "two"}`),
 			},
-			wantErr: "unify scopes",
+			wantErr: "unify scopes:\n#Konduit.foo: conflicting values \"two\" and \"one\"",
 		},
 		{
 			name:  "returns error when scope type conflicts",
@@ -88,7 +88,7 @@ func TestEval(t *testing.T) {
 			opts: []cueval.Option{
 				cueval.WithScopes(`{"foo": "not-an-int", "bar": "fixed"}`),
 			},
-			wantErr: "build instance: foo: conflicting values",
+			wantErr: "build instance:\nfoo: conflicting values",
 		},
 		{
 			name:  "returns error when scope value conflicts",
@@ -96,7 +96,7 @@ func TestEval(t *testing.T) {
 			opts: []cueval.Option{
 				cueval.WithScopes(`{"foo": 42, "bar": "different"}`),
 			},
-			wantErr: "build instance: bar: conflicting values",
+			wantErr: "build instance:\nbar: conflicting values",
 		},
 		{
 			name:  "returns error when scope conflicts with CUE definition",
@@ -104,7 +104,7 @@ func TestEval(t *testing.T) {
 			opts: []cueval.Option{
 				cueval.WithScopes(`{"foo": "different"}`),
 			},
-			wantErr: "unify instance with scopes",
+			wantErr: "unify instance with scopes:\n#Konduit.foo: conflicting values \"different\" and \"fixed\"",
 		},
 	}
 

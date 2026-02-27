@@ -93,16 +93,16 @@ func (e *Evaluator) Build(inst *build.Instance) (cue.Value, error) {
 
 	v := ctx.BuildInstance(inst, cue.Scope(vScopes))
 	if v.Err() != nil {
-		return cue.Value{}, fmt.Errorf("build instance: %w", v.Err())
+		return cue.Value{}, fmt.Errorf("build instance:\n%s", cueerrors.Details(v.Err(), nil))
 	}
 
 	v = v.Unify(vScopes)
 	if v.Err() != nil {
-		return cue.Value{}, fmt.Errorf("unify instance with scopes: %w", v.Err())
+		return cue.Value{}, fmt.Errorf("unify instance with scopes:\n%s", cueerrors.Details(v.Err(), nil))
 	}
 
 	if err := v.Validate(cue.Concrete(true)); err != nil {
-		return cue.Value{}, fmt.Errorf("value not concrete: %w", err)
+		return cue.Value{}, fmt.Errorf("value not concrete:\n%s", cueerrors.Details(err, nil))
 	}
 
 	return v, nil
@@ -123,7 +123,7 @@ func (e *Evaluator) buildScopes(ctx *cue.Context) (cue.Value, error) {
 
 		vAllScopes = vAllScopes.Unify(vScope)
 		if vAllScopes.Err() != nil {
-			return cue.Value{}, fmt.Errorf("unify scopes: %w", vAllScopes.Err())
+			return cue.Value{}, fmt.Errorf("unify scopes:\n%s", cueerrors.Details(vAllScopes.Err(), nil))
 		}
 	}
 
