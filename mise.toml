@@ -1,5 +1,5 @@
 [tools]
-cue = "0.15.4"
+cue = "0.16.0"
 go = "1.26.1"
 golangci-lint = "2.11.4"
 helm = "3.20.1"
