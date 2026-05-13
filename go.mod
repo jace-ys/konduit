@@ -6,7 +6,7 @@ require (
 	cuelang.org/go v0.16.1
 	github.com/alecthomas/kong v1.15.0
 	github.com/goccy/go-yaml v1.19.2
-	github.com/onsi/gomega v1.39.1
+	github.com/onsi/gomega v1.40.0
 	github.com/stretchr/testify v1.11.1
 	sigs.k8s.io/kustomize/api v0.21.1
 )
