@@ -1,6 +1,6 @@
 [tools]
 cue = "0.16.1"
-go = "1.26.3"
+go = "1.26.4"
 golangci-lint = "2.12.2"
 helm = "3.20.2"
 kustomize = "5.8.1"
