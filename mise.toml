@@ -2,7 +2,7 @@
 cue = "0.16.1"
 go = "1.26.3"
 golangci-lint = "2.12.2"
-helm = "3.20.2"
+helm = "3.21.0"
 kustomize = "5.8.1"
 
 "go:github.com/vektra/mockery/v3" = "3.7.0"
