@@ -1,7 +1,7 @@
 FROM alpine/helm:3.21.0 AS helm
 FROM registry.k8s.io/kustomize/kustomize:v5.8.1 AS kustomize
 
-FROM alpine:3.23
+FROM alpine:3.24
 
 LABEL org.opencontainers.image.authors="jaceys.tan@gmail.com"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
