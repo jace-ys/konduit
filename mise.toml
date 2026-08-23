@@ -5,7 +5,7 @@ golangci-lint = "2.12.2"
 helm = "3.21.0"
 kustomize = "5.8.1"
 
-"go:github.com/vektra/mockery/v3" = "3.7.0"
+"go:github.com/vektra/mockery/v3" = "3.7.4"
 
 [tasks.build]
 run = "go build -o dist/ ./cmd/..."
