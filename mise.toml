@@ -1,7 +1,7 @@
 [tools]
 cue = "0.16.1"
 go = "1.26.4"
-golangci-lint = "2.12.2"
+golangci-lint = "2.13.2"
 helm = "3.21.0"
 kustomize = "5.8.1"
 
