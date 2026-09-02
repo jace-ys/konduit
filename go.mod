@@ -7,7 +7,7 @@ require (
 	github.com/alecthomas/kong v1.15.0
 	github.com/goccy/go-yaml v1.19.2
 	github.com/onsi/gomega v1.41.0
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.1
 	sigs.k8s.io/kustomize/api v0.21.1
 )
 
@@ -43,7 +43,7 @@ require (
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/stretchr/objx v0.5.3 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
-	go.yaml.in/yaml/v3 v3.0.4 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/net v0.52.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
